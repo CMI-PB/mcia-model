@@ -57,7 +57,7 @@ meta.2021$age_at_boost<- as.numeric(round(difftime(meta.2021$date_of_boost,
 
 ### Load imputed data
 Data source: [https://github.com/joreynajr/cmi-pb-multiomics/tree/main/results/main/cmi_pb_datasets/processed/imputed]  
-Data was imputed using code in: TBD
+Data was imputed using code in: [https://github.com/CMI-PB/2020_2021_data_merge/tree/main/scripts/CMIPB_2020_2021_imputation.Rmd]
 Obtain files below from data source and save to local drive 
 ```{r}
 # imputed_dir is path to local drive where data is saved
