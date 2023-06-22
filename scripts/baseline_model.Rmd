@@ -1,0 +1,281 @@
+---
+title: "Baseline model"
+output: html_notebook
+---
+
+### Load required libraries
+```{r}
+library(omicade4)
+library(mogsa)
+library(RSpectra)
+library(lubridate)
+library(glmnet)
+library(dplyr)
+```
+
+### Source code from MCIA model
+Requires additional MCIA source code from [https://github.com/akonstodata/mcia_mbpca]
+```{r}
+source('https://raw.githubusercontent.com/akonstodata/mcia_mbpca/main/R/MCIA_mbpca_extra.R')
+```
+
+### Load metadata and task matrices
+Data source: [https://github.com/joreynajr/cmi-pb-multiomics/tree/main/results/main/cmi_pb_datasets/processed/harmonized]
+Obtain files below from data source and save to local drive
+```{r}
+
+# data_dir is path to local drive where data is saved
+#setwd(data_dir)
+data_dir = "/home/pramod/Documents/GitHub/gitlab/mcia-model/cmi_pb_datasets/processed/harmonized"
+setwd(data_dir)
+
+task_mat<-read.table('task_matrix.common_names.mfi_normalised.tsv',sep='\t',header=TRUE,stringsAsFactors=TRUE,row.names=1)
+task_mat<-read.table('task_matrix.common_names.mfi_raw.tsv',sep='\t',header=TRUE,stringsAsFactors=TRUE,row.names=1)
+
+
+# log normalize certain tasks
+task_mat[,1:7] = log2(task_mat[,1:7]+1)
+task_mat[,11:14] = log2(task_mat[,11:14]+1)
+
+# Read in metadata
+meta.2020<-read.table('clinical_metadata.2020.tsv',sep='\t',header=TRUE,stringsAsFactors=TRUE,row.names=1)
+meta.2021<-read.table('clinical_metadata.2021.tsv',sep='\t',header=TRUE,stringsAsFactors=TRUE,row.names=1)
+
+# Get age at boost
+library(lubridate)
+meta.2020$date_of_boost<-parse_date_time(meta.2020$date_of_boost,"ymd")
+meta.2020$year_of_birth<-parse_date_time(meta.2020$year_of_birth,"ymd")
+meta.2020$age_at_boost<- as.numeric(round(difftime(meta.2020$date_of_boost,
+                                                    meta.2020$year_of_birth,units="weeks")/52,2))
+meta.2021$date_of_boost<-parse_date_time(meta.2021$date_of_boost,"ymd")
+meta.2021$year_of_birth<-parse_date_time(meta.2021$year_of_birth,"ymd")
+meta.2021$age_at_boost<- as.numeric(round(difftime(meta.2021$date_of_boost,
+                                                    meta.2021$year_of_birth,units="weeks")/52,2))
+```
+
+### Load imputed data
+Data source: [https://github.com/joreynajr/cmi-pb-multiomics/tree/main/results/main/cmi_pb_datasets/processed/imputed]  
+Data was imputed using code in: [https://github.com/CMI-PB/2020_2021_data_merge/tree/main/scripts/CMIPB_2020_2021_imputation.Rmd]
+Obtain files below from data source and save to local drive 
+```{r}
+# imputed_dir is path to local drive where data is saved
+setwd("/home/pramod/Documents/GitHub/gitlab/mcia-model/cmi_pb_datasets/processed/imputed")
+
+# Import imputed datasets
+rnaseq_baseline_mat_imputed_20 <- read.csv('rnaseq_baseline_mat_imputed_20_051022.csv',row.names=1)
+cytof_baseline_mat_imputed_20 <- read.csv('cytof_baseline_mat_imputed_20_051022.csv',row.names=1)
+olink_baseline_mat_imputed_20 <- read.csv('olink_baseline_mat_imputed_20_051022.csv',row.names=1)
+abtiters_baseline_mat_imputed_20 <- read.csv('abtiters_baseline_mat_imputed_20_051022.csv',row.names=1)
+
+rnaseq_baseline_mat_imputed_21 <- read.csv('rnaseq_baseline_mat_imputed_21_051022.csv',row.names=1)
+cytof_baseline_mat_imputed_21 <- read.csv('cytof_baseline_mat_imputed_21_051022.csv',row.names=1)
+olink_baseline_mat_imputed_21 <- read.csv('olink_baseline_mat_imputed_21_051022.csv',row.names=1)
+abtiters_baseline_mat_imputed_21 <- read.csv('abtiters_baseline_mat_imputed_21_051022.csv',row.names=1)
+
+```
+
+### Check whether features are the same between 2020 and 2021 data
+```{r}
+# Check features the same
+identical(colnames(rnaseq_baseline_mat_imputed_20),colnames(rnaseq_baseline_mat_imputed_21))
+identical(colnames(cytof_baseline_mat_imputed_20),colnames(cytof_baseline_mat_imputed_21))
+identical(colnames(olink_baseline_mat_imputed_20),colnames(olink_baseline_mat_imputed_21))
+identical(colnames(abtiters_baseline_mat_imputed_20),colnames(abtiters_baseline_mat_imputed_21))
+```
+
+### Prepare data matrix for MCIA model on 2020 data
+```{r}
+data_2020<-list(cytof=t(cytof_baseline_mat_imputed_20), 
+                seq=t(rnaseq_baseline_mat_imputed_20),
+                olink=t(olink_baseline_mat_imputed_20),
+                abtiters=t(abtiters_baseline_mat_imputed_20))
+lapply(data_2020,dim)
+```
+### Run MCIA with 10 factors
+```{r}
+set.seed(0)
+num_comps=10
+mcia_out_gs<-mcia_mbpca(data_2020,num_comps=num_comps,preprocess='nsc',block_prep='lambda_all',
+                        deflat_method="globalScore") 
+```
+
+### Create lists of associated prediction tasks
+```{r}
+tasks_ab<-c('IgG.PT','IgG.FHA','IgG.PRN','IgG1.PT','IgG1.FHA','IgG1.PRN','IgG4.PT','IgG4.FHA','IgG4.PRN')
+tasks_cytof<-c('Monocytes','ASCs..Plasmablasts.','CD4Tcells')
+tasks_seq<-c('ENSG00000277632','ENSG00000136244','ENSG00000100906','ENSG00000229807')
+
+all_tasks <- c(tasks_ab, tasks_cytof, tasks_seq)
+```
+
+### Add demographic and baseline features to MCIA factor model to create MCIAplus model
+```{r}
+gs_2020_temp = mcia_out_gs$mcia_result$t
+
+gs_2020 <- as_tibble(meta.2020["age_at_boost"]) %>%
+    rownames_to_column("rowid") %>%
+    filter(rowid %in% rownames(gs_2020_temp)) %>%
+    column_to_rownames("rowid")
+  
+colnames(gs_2020) <- "age"
+gs_2020$infancy_vac<-as.numeric(meta.2020[rownames(gs_2020),'infancy_vac'])
+gs_2020$biological_sex<-as.numeric(meta.2020[rownames(gs_2020),'biological_sex'])
+
+n_cols = dim(gs_2020)[2]
+gs_2020[,(n_cols+1):(n_cols+length(tasks_ab))]<-abtiters_baseline_mat_imputed_20[rownames(gs_2020),tasks_ab]
+colnames(gs_2020)[(n_cols+1):(n_cols+length(tasks_ab))]<-tasks_ab
+
+n_cols = dim(gs_2020)[2]
+gs_2020[,(n_cols+1):(n_cols+length(tasks_seq))]<-rnaseq_baseline_mat_imputed_20[rownames(gs_2020),tasks_seq]
+colnames(gs_2020)[(n_cols+1):(n_cols+length(tasks_seq))]<-tasks_seq
+
+n_cols = dim(gs_2020)[2]
+gs_2020[,(n_cols+1):(n_cols+length(tasks_cytof))]<-cytof_baseline_mat_imputed_20[rownames(gs_2020),tasks_cytof]
+colnames(gs_2020)[(n_cols+1):(n_cols+length(tasks_cytof))]<-tasks_cytof
+
+```
+
+
+### For each model, can assess which features contribute to non-zero coefficients
+Consider only choosing models for follow-on analysis that show good correlation scores
+```{r, message=FALSE}
+all_models_coef<-vector(mode='list',length=14)
+all_models_names<-vector(mode='list',length=14)
+all_models<-vector(mode='list',length=14)
+for (i in 1:14){
+  set.seed(1)
+  x_out <-data.frame(task_mat[,i])
+  rownames(x_out)<-rownames(task_mat)
+  x_out$temp<-'temp'
+  names(x_out)<-c('Y','temp')
+  x_out_r<-na.omit(x_out)
+  row_int<-intersect(rownames(x_out_r),rownames(gs_2020))
+  x_out_r<-x_out_r[row_int,]
+  gs_2020_filt<-gs_2020[rownames(x_out_r),]
+  
+  
+  # create lasso model
+  cvfit_out<-cv.glmnet(x=as.matrix(gs_2020_filt), y=as.matrix(x_out_r[,'Y']), family='gaussian',
+                         alpha=1,nfolds=nrow(gs_2020_filt-1)) 
+  all_models_coef[i]=list(coef(cvfit_out, s = 'lambda.min')[coef(cvfit_out, s = 'lambda.min')[,1]!= 0])
+  all_models_names[i]=list(rownames(coef(cvfit_out, s = 'lambda.min'))[coef(cvfit_out, s = 'lambda.min')[,1]!= 0])
+}
+names(all_models_coef)<-colnames(task_mat)
+names(all_models_names)<-colnames(task_mat)
+
+for (i in 1:14){
+  all_models[[i]] = data.frame(cbind(all_models_names[[i]],all_models_coef[[i]]))
+  colnames(all_models[[i]])<-c("Variable","Coefficient")
+  all_models[[i]]$Coefficient<-as.numeric(all_models[[i]]$Coefficient)
+  all_models[[i]]$Coefficient=round(all_models[[i]]$Coefficient,3)
+}
+names(all_models)<-colnames(task_mat)
+
+for (i in 1:14){
+  all_models[[i]]$Variable[all_models[[i]]$Variable==tasks_seq[1]]="CCL3"
+  all_models[[i]]$Variable[all_models[[i]]$Variable==tasks_seq[2]]="IL6"
+  all_models[[i]]$Variable[all_models[[i]]$Variable==tasks_seq[3]]="NFKBIA"
+  all_models[[i]]$Variable[all_models[[i]]$Variable==tasks_seq[4]]="XIST"
+  all_models[[i]]<-all_models[[i]] %>% arrange(desc(abs(Coefficient)))
+}
+
+all_models[1]
+
+all_models_df = enframe(all_models)
+
+
+```
+
+### Assemble 2021 baseline data
+
+```{r}
+#preprocess2021 data
+#num_comps=10
+#block_prep_use = 'lambda_all'
+data_2021<-list(cytof=t(cytof_baseline_mat_imputed_21), 
+                seq=t(rnaseq_baseline_mat_imputed_21),
+                olink=t(olink_baseline_mat_imputed_21),
+                abtiters=t(abtiters_baseline_mat_imputed_21))
+
+#table_out<-nsc_prep(data_2021, num_comps)
+#final_out<-processOpt(table_out,scale=FALSE,center=FALSE,num_comps,option=block_prep_use)
+
+# generate 2021 global scores using 2020 models
+#gs_2021_temp=new_gs(final_out,mcia_out_gs$mcia_result)
+#rownames(gs_2021_temp)<-rownames(meta.2021)
+#gs_2021<-data.frame(gs_2021_temp)
+
+# Add demographic variables to 2021 MCIA global scores
+gs_2021 <- as.data.frame(meta.2021[,"age_at_boost"])
+colnames(gs_2021)<- "age"
+rownames(gs_2021) = rownames(meta.2021)
+
+
+gs_2021$infancy_vac<-as.numeric(meta.2021[rownames(gs_2021),'infancy_vac'])
+gs_2021$biological_sex<- as.numeric(meta.2021[rownames(gs_2021),'biological_sex'])
+
+# Add day 0 values of tasks to 2021 MCIA global scores to make 2021 'MCIAplus' model
+n_cols = dim(gs_2021)[2]
+gs_2021[,(n_cols+1):(n_cols+length(tasks_ab))]<-abtiters_baseline_mat_imputed_21[rownames(gs_2021),tasks_ab]
+colnames(gs_2021)[(n_cols+1):(n_cols+length(tasks_ab))]<-tasks_ab
+
+n_cols = dim(gs_2021)[2]
+gs_2021[,(n_cols+1):(n_cols+length(tasks_seq))]<-rnaseq_baseline_mat_imputed_21[rownames(gs_2021),tasks_seq]
+colnames(gs_2021)[(n_cols+1):(n_cols+length(tasks_seq))]<-tasks_seq
+
+n_cols = dim(gs_2021)[2]
+gs_2021[,(n_cols+1):(n_cols+length(tasks_cytof))]<-cytof_baseline_mat_imputed_21[rownames(gs_2021),tasks_cytof]
+colnames(gs_2021)[(n_cols+1):(n_cols+length(tasks_cytof))]<-tasks_cytof
+
+```
+
+### Generate predictions for 2021 tasks
+```{r}
+# initiate matrices
+val_predict<-data.frame(matrix(nrow = nrow(gs_2021), ncol=ncol(task_mat)))
+rank_predict<-data.frame(matrix(nrow=nrow(gs_2021),ncol=ncol(task_mat)))
+rownames(rank_predict)<-rownames(val_predict)<-rownames(gs_2021)
+colnames(rank_predict)<-colnames(val_predict)<-colnames(task_mat)
+
+set.seed(1)
+for (i in 1:ncol(task_mat)){  # choose variables here which to predict with model vs. with day 0 values
+  
+  x_out <-data.frame(task_mat[,i])
+  rownames(x_out)<-rownames(task_mat)
+  x_out$temp<-'temp'
+  names(x_out)<-c('Y','temp')
+  x_out_r<-na.omit(x_out)
+  row_int<-intersect(rownames(x_out_r),rownames(gs_2020))
+  x_out_r<-x_out_r[row_int,]
+  gs_2020_filt<-gs_2020[rownames(x_out_r),] 
+  
+  # create lasso model using 2020 data
+  cvfit_out<-cv.glmnet(x=as.matrix(gs_2020_filt), x_out_r$Y, family='gaussian',
+                        alpha=1,nfolds=nrow(gs_2020_filt),type.measure="mse") 
+  
+  
+  # make predictions on 2021 data
+  preds<-data.frame(predict(cvfit_out,newx=as.matrix(gs_2021),s='lambda.min'))
+  val_predict[,i]<-preds
+}
+
+```
+
+### Modify predictions to 'NA' where original data had 'NA'
+```{r}
+val_predict[c("61","62","75"),c("Monocytes_day1","ASCs..Plasmablasts._day7","CD4Tcells_day3")]<-NaN
+val_predict[c("82","87","88"),1:7]<-NaN
+for (i in 1:14){
+  rank_predict[,i]<-rank(-val_predict[,i],na.last="keep",ties.method="min")
+}
+```
+
+### Clean up presentation to fit template
+```{r}
+rank_predict_reord<-colnames(rank_predict)
+rank_predict_reord[8:10]<-c(rank_predict_reord[9],rank_predict_reord[10],rank_predict_reord[8])
+rank_predict_out<-rank_predict[,rank_predict_reord] %>%
+  rownames_to_column("Subject_ID")
+
+write.table(rank_predict_out,'Baseline_Pramod_2020_preds_06212023.tsv',sep='\t')
+```

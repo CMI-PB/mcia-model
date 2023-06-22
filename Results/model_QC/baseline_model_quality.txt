@@ -1,0 +1,108 @@
+$IgG.PT_day14
+     Variable Coefficient
+1 (Intercept)       5.098
+2    IgG1.FHA       0.469
+3      IgG.PT       0.325
+4     IgG1.PT       0.200
+
+$IgG.FHA_day14
+     Variable Coefficient
+1 (Intercept)       6.482
+
+$IgG.PRN_day14
+     Variable Coefficient
+1 (Intercept)       7.982
+2 infancy_vac       0.353
+3        CCL3      -0.115
+
+$IgG1.PT_day14
+             Variable Coefficient
+1         (Intercept)      10.861
+2            IgG1.FHA       1.049
+3             IgG1.PT       0.328
+4 ASCs..Plasmablasts.      -0.269
+5              IgG.PT       0.148
+
+$IgG1.FHA_day14
+     Variable Coefficient
+1 (Intercept)      14.423
+2    IgG1.FHA       0.188
+3     IgG.FHA       0.011
+4      NFKBIA       0.010
+
+$IgG4.PT_day14
+     Variable Coefficient
+1 (Intercept)       5.853
+2     IgG4.PT       0.740
+3    IgG4.FHA       0.243
+4         age      -0.082
+5        XIST      -0.076
+
+$IgG4.FHA_day14
+     Variable Coefficient
+1 (Intercept)       6.514
+2    IgG4.FHA       1.058
+3    IgG4.PRN       0.275
+4        CCL3       0.136
+5         age      -0.035
+
+$Monocytes_day1
+     Variable Coefficient
+1 (Intercept)      25.561
+2         IL6      -6.110
+3     IgG.PRN      -2.218
+4     IgG1.PT      -1.005
+5   Monocytes       0.797
+6    IgG1.FHA      -0.227
+
+$ASCs..Plasmablasts._day7
+             Variable Coefficient
+1         (Intercept)       6.691
+2      biological_sex      -0.571
+3                CCL3      -0.411
+4                 IL6      -0.266
+5             IgG.FHA      -0.188
+6 ASCs..Plasmablasts.       0.167
+7            IgG4.FHA       0.104
+8                 age      -0.074
+9           Monocytes       0.016
+
+$CD4Tcells_day3
+        Variable Coefficient
+1    (Intercept)      29.045
+2 biological_sex      -6.757
+3      CD4Tcells       0.350
+
+$CCL3_day3
+     Variable Coefficient
+1 (Intercept)      -8.227
+2      NFKBIA       1.307
+3 infancy_vac      -0.552
+4        CCL3       0.300
+
+$IL.6_day3
+     Variable Coefficient
+1 (Intercept)     -14.137
+2      NFKBIA       1.810
+3 infancy_vac      -0.913
+4         IL6       0.112
+
+$NFKBIA_day7
+        Variable Coefficient
+1    (Intercept)       6.542
+2    infancy_vac      -0.450
+3         NFKBIA       0.344
+4 biological_sex      -0.187
+5           CCL3       0.148
+6            IL6       0.075
+7        IgG.FHA      -0.061
+
+$XIST_day14
+        Variable Coefficient
+1    (Intercept)      12.240
+2 biological_sex      -6.437
+3         NFKBIA       0.084
+4        IgG1.PT       0.045
+5        IgG.PRN      -0.033
+6           CCL3       0.011
+
