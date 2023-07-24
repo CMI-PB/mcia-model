@@ -1,0 +1,106 @@
+$IgG.PT_day14
+     Variable Coefficient
+1          X4      31.279
+2          X5     -12.768
+3         X10       8.579
+4 (Intercept)       6.271
+5          X3       1.730
+6          X7      -0.113
+
+$IgG.FHA_day14
+     Variable Coefficient
+1 (Intercept)       6.482
+
+$IgG.PRN_day14
+     Variable Coefficient
+1          X5      18.372
+2          X8      10.345
+3 (Intercept)       7.978
+4          X3       4.253
+
+$IgG1.PT_day14
+     Variable Coefficient
+1          X4      20.672
+2 (Intercept)      12.309
+
+$IgG1.FHA_day14
+     Variable Coefficient
+1 (Intercept)      14.742
+2          X1      -0.897
+
+$IgG4.PT_day14
+      Variable Coefficient
+1          X10      74.815
+2           X9      44.472
+3           X2      42.001
+4           X5     -37.227
+5           X8      31.958
+6           X7      31.756
+7           X6      28.189
+8           X3      24.679
+9           X1      15.989
+10          X4      -9.713
+11 (Intercept)       5.826
+
+$IgG4.FHA_day14
+     Variable Coefficient
+1         X10      53.833
+2          X7      42.293
+3          X9      40.783
+4          X2      34.905
+5          X3      12.469
+6          X4     -12.130
+7 (Intercept)       8.900
+8          X6       5.231
+
+$Monocytes_day1
+     Variable Coefficient
+1         X10    -184.990
+2          X7    -174.272
+3          X2     139.757
+4          X9      68.419
+5 (Intercept)      21.638
+
+$ASCs..Plasmablasts._day7
+     Variable Coefficient
+1          X2       8.977
+2 (Intercept)       1.727
+
+$CD4Tcells_day3
+     Variable Coefficient
+1          X1     -93.363
+2 (Intercept)      30.029
+3          X8     -24.848
+4          X7       7.340
+
+$CCL3_day3
+     Variable Coefficient
+1 (Intercept)       5.346
+2          X5      -2.788
+
+$IL.6_day3
+     Variable Coefficient
+1          X8     -25.300
+2          X5     -15.110
+3         X10      14.268
+4          X7       4.543
+5 (Intercept)       2.684
+
+$NFKBIA_day7
+     Variable Coefficient
+1          X8     -10.408
+2 (Intercept)       9.823
+
+$XIST_day14
+      Variable Coefficient
+1           X8     -86.080
+2          X10     -49.374
+3           X1     -32.602
+4           X5      21.912
+5           X9      20.251
+6           X6     -18.710
+7           X3     -17.252
+8           X4      14.672
+9           X7      14.587
+10          X2       6.095
+11 (Intercept)       4.558

@@ -1,0 +1,37 @@
+subject_id	infancy_vac	biological_sex	year_of_birth	date_of_boost	ethnicity	race	specimen_type
+61	wP	Female	1987-01-01	2019-04-08	Not Hispanic or Latino	Unknown or Not Reported	Blood
+62	wP	Female	1993-01-01	2018-11-26	Not Hispanic or Latino	Asian	Blood
+63	wP	Female	1995-01-01	2018-11-26	Not Hispanic or Latino	White	Blood
+64	wP	Male	1993-01-01	2018-11-26	Not Hispanic or Latino	Asian	Blood
+65	wP	Male	1990-01-01	2018-12-03	Not Hispanic or Latino	White	Blood
+66	wP	Female	1976-01-01	2018-12-03	Not Hispanic or Latino	Black or African American	Blood
+67	wP	Female	1972-01-01	2019-01-28	Hispanic or Latino	White	Blood
+68	wP	Male	1972-01-01	2019-01-28	Hispanic or Latino	White	Blood
+69	wP	Female	1990-01-01	2019-01-28	Hispanic or Latino	White	Blood
+70	aP	Male	1998-01-01	2019-01-28	Not Hispanic or Latino	American Indian/Alaska Native	Blood
+71	aP	Female	1998-01-01	2019-01-28	Not Hispanic or Latino	White	Blood
+72	wP	Female	1991-01-01	2019-02-25	Not Hispanic or Latino	White	Blood
+73	wP	Female	1995-01-01	2019-02-25	Not Hispanic or Latino	White	Blood
+74	wP	Female	1995-01-01	2019-02-25	Not Hispanic or Latino	White	Blood
+75	aP	Female	1998-01-01	2019-02-25	Not Hispanic or Latino	Native Hawaiian or Other Pacific Islander	Blood
+76	aP	Female	1998-01-01	2019-02-25	Not Hispanic or Latino	Asian	Blood
+77	wP	Male	1988-01-01	2019-03-18	Not Hispanic or Latino	White	Blood
+78	wP	Female	1993-01-01	2019-03-18	Not Hispanic or Latino	White	Blood
+79	wP	Male	1987-01-01	2019-03-18	Not Hispanic or Latino	White	Blood
+80	wP	Female	1992-01-01	2019-03-18	Not Hispanic or Latino	Asian	Blood
+81	wP	Male	1993-01-01	2019-03-18	Not Hispanic or Latino	White	Blood
+82	aP	Female	1998-01-01	2019-03-18	Not Hispanic or Latino	More Than One Race	Blood
+83	aP	Female	1999-01-01	2019-04-08	Not Hispanic or Latino	White	Blood
+84	aP	Female	1997-01-01	2019-04-08	Not Hispanic or Latino	More Than One Race	Blood
+85	aP	Female	2000-01-01	2019-04-29	Hispanic or Latino	White	Blood
+86	aP	Female	1998-01-01	2019-04-29	Not Hispanic or Latino	Asian	Blood
+87	aP	Male	2000-01-01	2019-04-29	Not Hispanic or Latino	Asian	Blood
+88	aP	Male	2000-01-01	2019-04-29	Not Hispanic or Latino	Asian	Blood
+89	aP	Female	1997-01-01	2019-06-03	Not Hispanic or Latino	Asian	Blood
+90	aP	Female	1999-01-01	2019-06-03	Not Hispanic or Latino	Asian	Blood
+91	aP	Male	1998-01-01	2019-06-03	Unknown	Unknown or Not Reported	Blood
+92	aP	Female	2000-01-01	2019-06-24	Hispanic or Latino	White	Blood
+93	aP	Female	1996-01-01	2019-06-24	Not Hispanic or Latino	More Than One Race	Blood
+94	aP	Male	1999-01-01	2019-06-24	Not Hispanic or Latino	Unknown or Not Reported	Blood
+95	aP	Female	1998-01-01	2019-06-24	Hispanic or Latino	Unknown or Not Reported	Blood
+96	aP	Male	2000-01-01	2019-06-24	Hispanic or Latino	Unknown or Not Reported	Blood

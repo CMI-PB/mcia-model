@@ -1,0 +1,61 @@
+subject_id	infancy_vac	biological_sex	year_of_birth	date_of_boost	ethnicity	race	specimen_type
+1	wP	Female	1986-01-01	2016-09-12	Not Hispanic or Latino	White	Blood
+2	wP	Female	1968-01-01	2019-01-28	Not Hispanic or Latino	White	Blood
+3	wP	Female	1983-01-01	2016-10-10	Unknown	White	Blood
+4	wP	Male	1988-01-01	2016-08-29	Not Hispanic or Latino	Asian	Blood
+5	wP	Male	1991-01-01	2016-08-29	Not Hispanic or Latino	Asian	Blood
+6	wP	Female	1988-01-01	2016-10-10	Not Hispanic or Latino	White	Blood
+7	wP	Female	1981-01-01	2016-11-07	Hispanic or Latino	More Than One Race	Blood
+8	wP	Female	1985-01-01	2019-02-25	Not Hispanic or Latino	White	Blood
+9	aP	Male	1996-01-01	2016-07-25	Not Hispanic or Latino	Asian	Blood
+10	wP	Female	1982-01-01	2016-07-25	Not Hispanic or Latino	Asian	Blood
+11	wP	Female	1986-01-01	2016-08-29	Hispanic or Latino	Unknown or Not Reported	Blood
+12	wP	Male	1982-01-01	2016-07-25	Not Hispanic or Latino	Asian	Blood
+13	aP	Male	1997-01-01	2016-07-25	Not Hispanic or Latino	White	Blood
+14	wP	Male	1993-01-01	2016-08-15	Not Hispanic or Latino	White	Blood
+15	wP	Male	1989-01-01	2016-08-15	Not Hispanic or Latino	Asian	Blood
+16	wP	Female	1987-01-01	2016-07-25	Hispanic or Latino	Unknown or Not Reported	Blood
+17	wP	Female	1980-01-01	2016-09-12	Hispanic or Latino	White	Blood
+18	aP	Female	1997-01-01	2016-08-29	Hispanic or Latino	Unknown or Not Reported	Blood
+19	wP	Male	1994-01-01	2016-09-26	Not Hispanic or Latino	Asian	Blood
+20	wP	Female	1981-01-01	2016-08-29	Not Hispanic or Latino	White	Blood
+21	wP	Male	1983-01-01	2016-08-29	Not Hispanic or Latino	White	Blood
+22	wP	Female	1985-01-01	2016-08-29	Not Hispanic or Latino	White	Blood
+23	wP	Female	1991-01-01	2016-09-26	Not Hispanic or Latino	White	Blood
+24	wP	Female	1992-01-01	2016-09-13	Not Hispanic or Latino	Asian	Blood
+25	wP	Female	1988-01-01	2016-09-13	Not Hispanic or Latino	Black or African American	Blood
+26	wP	Female	1983-01-01	2016-09-26	Hispanic or Latino	Unknown or Not Reported	Blood
+27	aP	Female	1997-01-01	2016-09-26	Not Hispanic or Latino	Asian	Blood
+28	wP	Male	1982-01-01	2016-09-26	Unknown	Unknown or Not Reported	Blood
+29	aP	Male	1997-01-01	2016-09-26	Hispanic or Latino	White	Blood
+30	wP	Female	1988-01-01	2016-09-26	Hispanic or Latino	White	Blood
+31	wP	Female	1989-01-01	2016-09-26	Not Hispanic or Latino	Asian	Blood
+32	aP	Male	1997-01-01	2016-10-24	Not Hispanic or Latino	Native Hawaiian or Other Pacific Islander	Blood
+33	wP	Male	1990-01-01	2016-10-10	Hispanic or Latino	More Than One Race	Blood
+34	wP	Female	1983-01-01	2016-10-24	Hispanic or Latino	Unknown or Not Reported	Blood
+35	wP	Male	1991-01-01	2016-10-10	Unknown	White	Blood
+36	aP	Female	1997-01-01	2016-10-24	Hispanic or Latino	White	Blood
+37	aP	Female	1998-01-01	2016-11-07	Not Hispanic or Latino	More Than One Race	Blood
+38	aP	Female	1997-01-01	2016-10-24	Not Hispanic or Latino	White	Blood
+39	wP	Female	1985-01-01	2016-10-24	Not Hispanic or Latino	White	Blood
+40	wP	Female	1994-01-01	2016-10-24	Not Hispanic or Latino	Asian	Blood
+41	wP	Male	1985-01-01	2016-11-07	Not Hispanic or Latino	White	Blood
+42	aP	Female	1997-01-01	2016-11-07	Not Hispanic or Latino	Asian	Blood
+43	aP	Female	1998-01-01	2016-11-07	Not Hispanic or Latino	More Than One Race	Blood
+44	aP	Female	1998-01-01	2016-11-07	Hispanic or Latino	More Than One Race	Blood
+45	aP	Female	1997-01-01	2016-11-28	Not Hispanic or Latino	Asian	Blood
+46	aP	Female	1998-01-01	2016-11-07	Not Hispanic or Latino	Unknown or Not Reported	Blood
+47	aP	Female	1996-01-01	2016-11-28	Not Hispanic or Latino	White	Blood
+48	aP	Female	1998-01-01	2017-01-17	Not Hispanic or Latino	White	Blood
+49	aP	Female	1997-01-01	2017-01-17	Not Hispanic or Latino	White	Blood
+50	aP	Female	1997-01-01	2016-11-28	Not Hispanic or Latino	Asian	Blood
+51	aP	Male	1997-01-01	2016-11-28	Not Hispanic or Latino	White	Blood
+52	aP	Male	1998-01-01	2017-01-03	Not Hispanic or Latino	More Than One Race	Blood
+53	aP	Female	1998-01-01	2017-01-03	Hispanic or Latino	Unknown or Not Reported	Blood
+54	aP	Female	1997-01-01	2017-01-17	Not Hispanic or Latino	Asian	Blood
+55	aP	Female	1997-01-01	2017-01-17	Not Hispanic or Latino	Asian	Blood
+56	aP	Female	1997-01-01	2017-01-30	Not Hispanic or Latino	Asian	Blood
+57	aP	Female	1996-01-01	2017-01-30	Not Hispanic or Latino	Asian	Blood
+58	aP	Female	1997-01-01	2017-01-30	Hispanic or Latino	Unknown or Not Reported	Blood
+59	aP	Female	1997-01-01	2017-01-30	Hispanic or Latino	More Than One Race	Blood
+60	aP	Male	1997-01-01	2017-01-30	Hispanic or Latino	White	Blood
